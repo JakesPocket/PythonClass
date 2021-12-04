@@ -21,28 +21,30 @@ import turtle       # to display the data points in a graphic window
 import statistics   # to find the 'mean' and 'standard deviation' of data in the 'distances' list
 import subprocess   # to save the turtle plot as an image
 
-def simulate(walkers, walks, walk_lengths):
+def main():
     '''
     
     '''
 
     #Retrieve command line arguements
-    '''
     try:
         walk_lengths = list(map(int,sys.argv[1].split(','))) #Convert 'steps' from string into a list of integers
         walks = int(sys.argv[2]) #Convert 'walks' from string into an integer
         walker = sys.argv[3]
     except:
-        walks = 50
         walk_lengths = [100,1000]
+        walks = 50
         walker = 'all'
+
         print('Please, ensure you enter "python3 <filename> <integer(steps)> <integer(walks)> <walkers(s)>')
-        return
-    '''
-    random.seed(9387482)
-    walkers = get_data_structures(walkers)
-    do_trials(walkers, walks, walk_lengths)
-    plot()
+        #return
+        
+    # End - Error checking and conversions
+    walkers = get_data_structures(walker)
+
+
+    simulate(walkers, walks, walk_lengths)
+
 
 # End - main()
 
@@ -58,42 +60,85 @@ def get_data_structures(walker):
     reg = { 'name':'Reg', 'start':start_point, 'now_point':[0,0], 'ways':(E, W), 'end_points':[], 'longest':0, 'shortest':0, 'average':0}
 
     #Assign a dictionary with the corresponding name OR include all dictionaries
-    if walker == 'Pa':         return [pa]
-    elif walker == 'Mi-Ma':    return [ma]
-    elif walker == 'Reg':      return [reg] 
-    elif walker == 'all':      return [pa, ma, reg]
+    if walker == 'Pa':         walkers = [pa]
+    elif walker == 'Mi-Ma':    walkers = [ma]
+    elif walker == 'Reg':      walkers = [reg] 
+    elif walker == 'all':      walkers = [pa, ma, reg]
     else: return print('please enter "Pa", "Mi-Ma", "Reg", or "all" for the <walkers> parameter.')
     # End - dictionary assignmnet
+    return walkers
 
-
-
-def do_walk_trials(walkers, walks, walk_lengths):
-    ''' Calls do_walk_trials() passing through three arguments '''
+def simulate(walkers, walks, walk_lengths):
+    '''
+    
+    '''
     for who in walkers:
-        with open('hello.txt', 'a') as foo:
-            foo.writelines(f'{walkers}\n')
         for steps in walk_lengths:
-            for _ in range(walks):
-                who['now_point'] = who['start']
-                for _ in range(steps): 
-                    who['now_point'] = [x + y for x, y in zip(who['now_point'], random.choice(who['ways']) )]
-                    
-                who['end_points'] += who['now_point']
-    get_mean_max_min_cv(who, 100)
-
+            do_walk_trials(who, walks, steps)
+            plot() if steps == 100 else None # Plot data points for the current 'walker' in walk of 100 steps
+            calc_and_print_mmmcv(who, steps)
 # End - simulate()
 
-
-
-
-
-
-
-
-
-def get_mean_max_min_cv(who, steps):
+def do_walk_trials(who, walks, steps):
     '''
-    Calculate the Mean, Max, Min, and CV of all of one walkerss walks
+    
+    '''
+    for _ in range(walks):
+        who['now_point'] = who['start'] # Reset starting point
+
+        take_a_walk(who, steps)
+
+        who['end_points'] += [take_a_walk(who, steps)]
+
+        
+# End - do_walk_trials()
+
+def take_a_walk(who, steps):
+    '''
+    
+    '''
+    for _ in range(steps): 
+        who['now_point'] = [x + y for x, y in zip(who['now_point'], random.choice(who['ways']) )]
+    return who['now_point']
+    
+# End - take_a_walk()
+
+
+
+
+
+def plot():
+    plotter =  turtle.Turtle()
+    plotter.hideturtle()
+    plotter.up()
+    plotter.seth(90)
+    plotter.speed(0)
+
+    walks = 50
+    steps = 100
+    
+    walkers = get_data_structures('all')
+    for who in walkers:
+        do_walk_trials(who, walks, steps)
+        calc_and_print_mmmcv(who, steps)
+        if who['name'] == 'Pa':     plotter.shape('circle'); plotter.color('black')
+        if who['name'] == 'Mi-Ma':  plotter.shape('square'); plotter.color('green')
+        if who['name'] == 'Reg':    plotter.shape('triangle'); plotter.color('red')
+
+        for x, y in who['end_points']: plotter.goto(x, y); plotter.stamp()
+
+
+
+    save_to_image()
+
+# End - do_plot()
+
+
+
+
+def calc_and_print_mmmcv(who, steps):
+    '''
+    calculate the Mean, Max, Min, and CV of all of one walkerss walks
     Parameters:
     who - the current walker/dictionary
     steps - number of steps taken from walk_lengths
@@ -112,48 +157,13 @@ def get_mean_max_min_cv(who, steps):
     print(f"{who['name']} random walk of {steps} steps")
     print(f"Mean = {avg_d:.1f} CV = {cv:.1f}")
     print(f"Max = {max_d:.1f} Min = {min_d:.1f}")
-# End - get_mean_max_min_cv()
+# End - get_mean_max_min()
 
 
-def plot():
-    pete =  turtle.Turtle() # Pete is a turtle
-    pete.hideturtle()       # Pete is a stealthy turtle
-    pete.up()               # Pete's tail is always up and wagging
-    pete.speed(0)           # Pete is a very fast turtle
-    
-    walks = 50
-    steps = [100]
-    walkers = get_data_structures('all')
-    for who in walkers:
-        simulate(who, walks, steps)
 
-        if who['name'] == 'Pa':     pete.shape('circle'); pete.color('black')
-        if who['name'] == 'Mi-Ma':  pete.shape('square'); pete.color('green')
-        if who['name'] == 'Reg':    pete.shape('triangle'); pete.color('red')
-
-        for x, y in who['end_points']: pete.goto(x, y); pete.stamp()
-    save_to_image()
-
-
-# End - do_plot() Thanks for your help, Pete!
-
-def save_to_image():
-    '''Saves the turtle canvas to 'random_walk.png'. Do not modify this function.
-    '''
-    turtle.getcanvas().postscript(file='random_walk.eps')
-    subprocess.run(['gs',
-                    '-dSAFER',
-                    '-o',
-                    'random_walk.png',
-                    '-r200',
-                    '-dEPSCrop',
-                    '-sDEVICE=png16m',
-                    'random_walk.eps'],
-                   stdout=subprocess.DEVNULL)
 
 
 if __name__ == '__main__':
     main()  #excucte main function
-
 
 
