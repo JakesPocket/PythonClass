@@ -15,11 +15,11 @@ import sys
 
 def main():
 
-    if len(sys.argv) != 2:
-        print('Error! Expected usage is C:\\dir_path>python program_name.py file_name.txt')
-        return
-    else:
-        read_file = sys.argv[1]
+#     if len(sys.argv) != 2:
+#         print('Error! Expected usage is C:\\dir_path>python program_name.py file_name.txt')
+#         return
+#     else:
+    read_file = 'book_data.txt'
 
     #creates a dictionary that will organize all lines by book title (key)
     sources = {}

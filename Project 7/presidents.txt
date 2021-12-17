@@ -1,0 +1,52 @@
+1961,John F. Kennedy,Democrat
+1962,John F. Kennedy,Democrat
+1963,Lyndon B. Johnson,Democrat
+1964,Lyndon B. Johnson,Democrat
+1965,Lyndon B. Johnson,Democrat
+1966,Lyndon B. Johnson,Democrat
+1967,Lyndon B. Johnson,Democrat
+1968,Lyndon B. Johnson,Democrat
+1969,Richard M. Nixon,Republican
+1970,Richard M. Nixon,Republican
+1971,Richard M. Nixon,Republican
+1972,Richard M. Nixon,Republican
+1973,Richard M. Nixon,Republican
+1974,Gerald Ford,Republican
+1975,Gerald Ford,Republican
+1976,Gerald Ford,Republican
+1977,Jimmy Carter,Democrat
+1978,Jimmy Carter,Democrat
+1979,Jimmy Carter,Democrat
+1980,Jimmy Carter,Democrat
+1981,Ronald Reagan,Republican
+1982,Ronald Reagan,Republican
+1983,Ronald Reagan,Republican
+1984,Ronald Reagan,Republican
+1985,Ronald Reagan,Republican
+1986,Ronald Reagan,Republican
+1987,Ronald Reagan,Republican
+1988,Ronald Reagan,Republican
+1989,George Bush,Republican
+1990,George Bush,Republican
+1991,George Bush,Republican
+1992,George Bush,Republican
+1993,Bill Clinton,Democrat
+1994,Bill Clinton,Democrat
+1995,Bill Clinton,Democrat
+1996,Bill Clinton,Democrat
+1997,Bill Clinton,Democrat
+1998,Bill Clinton,Democrat
+1999,Bill Clinton,Democrat
+2000,Bill Clinton,Democrat
+2001,George W. Bush,Republican
+2002,George W. Bush,Republican
+2003,George W. Bush,Republican
+2004,George W. Bush,Republican
+2005,George W. Bush,Republican
+2006,George W. Bush,Republican
+2007,George W. Bush,Republican
+2008,George W. Bush,Republican
+2009,Barack Obama,Democrat
+2010,Barack Obama,Democrat
+2011,Barack Obama,Democrat
+2012,Barack Obama,Democrat
